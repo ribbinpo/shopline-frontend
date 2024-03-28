@@ -6,11 +6,7 @@ const countStore = useExampleStore();
 const { increment, reset } = countStore;
 const { count } = storeToRefs(countStore);
 
-definePageMeta({
-  layout: "custom",
-});
-
-const { locale, setLocale } = useI18n();
+const { setLocale } = useI18n();
 </script>
 
 <template>
