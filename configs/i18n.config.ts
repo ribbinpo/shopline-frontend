@@ -4,9 +4,11 @@ export default defineI18nConfig(() => ({
   messages: {
     en: {
       welcome: "Welcome",
+      search: "Search for Products"
     },
     th: {
       welcome: "ยินดีต้อนรับ",
+      search: "ค้นหาสินค้า"
     }
   },
 }));
