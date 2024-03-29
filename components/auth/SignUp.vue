@@ -17,8 +17,18 @@ const state = reactive({
   password: undefined,
 });
 
+const { signUpUser } = useAuthStore();
+const { loading } = storeToRefs(useAuthStore());
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  console.log(event.data);
+  try {
+    await signUpUser(event.data);
+    // TODO: change to login state
+    // TODO: add toast for success
+  } catch (e) {
+    console.error(e);
+    // TODO: add toast
+  }
 }
 </script>
 

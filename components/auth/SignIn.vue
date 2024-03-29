@@ -2,6 +2,7 @@
 import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 import { AuthState } from "~/types/auth.type";
+// import { useAuthStore } from "~/stores/auth.store";
 
 const schema = z.object({
   email: z.string().email("Invalid email"),
@@ -15,9 +16,18 @@ const state = reactive({
   password: undefined,
 });
 
+const { signInUser } = useAuthStore();
+const { loading } = storeToRefs(useAuthStore());
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  // Do something with data
-  console.log(event.data);
+  try {
+    await signInUser({ ...event.data });
+    // TODO: add toast for success
+    // TODO: close modal
+  } catch (e) {
+    console.error(e);
+    // TODO: add toast
+  }
 }
 </script>
 
@@ -25,7 +35,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <div>
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-2xl font-medium">LOGIN</h2>
-      <UButton variant="link" @click="$emit('handleState', AuthState.SignUp)">create an account?</UButton>
+      <UButton variant="link" @click="$emit('handleState', AuthState.SignUp)"
+        >create an account?</UButton
+      >
     </div>
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
       <UFormGroup label="Email" name="email">
